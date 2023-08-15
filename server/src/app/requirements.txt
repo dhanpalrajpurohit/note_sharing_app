@@ -1,0 +1,13 @@
+asgiref==3.4.1
+click==8.0.4
+dataclasses==0.8
+fastapi==0.68.1
+greenlet==2.0.2
+h11==0.13.0
+importlib-metadata==4.8.3
+pydantic==1.9.2
+SQLAlchemy==1.4.23
+starlette==0.14.2
+typing_extensions==4.1.1
+uvicorn==0.15.0
+zipp==3.6.0
