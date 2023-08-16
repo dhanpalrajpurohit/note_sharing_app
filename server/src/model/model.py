@@ -5,6 +5,26 @@ import jwt
 from app.db import Base
 
 
+class Task(Base):
+    __tablename__ = "task"
+
+    id = Column(Integer, primary_key=True, index=True)
+    title = Column(String)
+    description = Column(String)
+    note_id = Column(Integer, ForeignKey("note.id"))
+
+
+class Note(Base):
+    __tablename__ = "note"
+    id = Column(Integer, primary_key=True, index=True)
+    title = Column(String)
+    description = Column(String)
+    user_id = Column(Integer, ForeignKey("user.id"))
+    task = relationship(Task, back_populates="note")
+
+    def __repr__(self):
+        return f'Note(title={self.title}, description={self.description}, user={self.user})'
+
 class User(Base):
     __tablename__ = "user"    
     id = Column(Integer, primary_key=True, index=True)
@@ -12,7 +32,7 @@ class User(Base):
     lname = Column(String)
     email = Column(String)
     password = Column(String)
-    note = relationship("Note", back_populates="user")
+    note = relationship(Note, back_populates="user")
 
     def __repr__(self):
         return f'User(fname={self.fname}, lname={self.lname}, email={self.email}, password={self.password})'
@@ -27,17 +47,4 @@ class User(Base):
             "lname": self.lname,
             "email": self.email
         })
-
-
-class Note(Base):
-    __tablename__ = "note"
-    id = Column(Integer, primary_key=True, index=True)
-    title = Column(String)
-    description = Column(String)
-    user_id = Column(Integer, ForeignKey("user.id"))
-    user = relationship(User, back_populates="note")
-
-    def __repr__(self):
-        return f'Note(title={self.title}, description={self.description}, user={self.user})'
-
 
