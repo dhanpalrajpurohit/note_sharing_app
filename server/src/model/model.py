@@ -1,6 +1,7 @@
+import jwt
+
 from sqlalchemy import Column, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
-import jwt
 
 from app.db import Base
 
@@ -23,10 +24,11 @@ class Note(Base):
     task = relationship(Task, back_populates="note")
 
     def __repr__(self):
-        return f'Note(title={self.title}, description={self.description}, user={self.user})'
+        return f"Note(title={self.title}, description={self.description}, user={self.user})"
+
 
 class User(Base):
-    __tablename__ = "user"    
+    __tablename__ = "user"
     id = Column(Integer, primary_key=True, index=True)
     fname = Column(String)
     lname = Column(String)
@@ -35,16 +37,14 @@ class User(Base):
     note = relationship(Note, back_populates="user")
 
     def __repr__(self):
-        return f'User(fname={self.fname}, lname={self.lname}, email={self.email}, password={self.password})'
+        return f"User(fname={self.fname}, lname={self.lname}, email={self.email}, password={self.password})"
 
     def generate_token(self) -> dict:
-        return ({
+        return {
             "token": jwt.encode(
-                {"fname": self.fname, "email": self.email},
-                "javainuse-secret-key"
+                {"fname": self.fname, "email": self.email}, "javainuse-secret-key"
             ),
             "fname": self.fname,
             "lname": self.lname,
-            "email": self.email
-        })
-
+            "email": self.email,
+        }
