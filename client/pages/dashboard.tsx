@@ -7,6 +7,17 @@ import './globals.css';
 
 
 import TodoView from '../components/todoView';
+import NoteView from '../components/NoteView';
+
+const NOTES_DETAILS_DATA: { "title": string, "content": string }[] = [
+  { "title": "Node JS", "content": "Leaning node js" },
+  { "title": "Python Notes", "content": "Notes about the oops concepts in python" },
+  { "title": "GYM", "content": "description about the diet and excerise" },
+  { "title": "Water Intake", "content": "Measure mentent about the wwater intake" },
+  { "title": "Pschology of Money", "content": "reading book about the financial knowledge" },
+  { "title": "Mobile Screen", "content": "How to reduce the mobile screen time" },
+  { "title": "Learn machine learning", "content": "Notes about the machine leaning notes and theory" },
+]
 
 const DashboardPage = () => {
   const [showDropdown, setShowDropdown] = useState(false);
@@ -46,7 +57,17 @@ const DashboardPage = () => {
         </div>
       </nav>
 
-      <TodoView />
+      <div className="grid grid-cols-5 gap-3 p-20">
+        {
+          NOTES_DETAILS_DATA.map((note, index) =>
+            <NoteView
+              key={index}
+              title={note.title}
+              content={note.content}
+            />
+          )
+        }
+      </div>
 
     </div>
   );
