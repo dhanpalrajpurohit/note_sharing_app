@@ -1,0 +1,10 @@
+{
+    "name": "Python: Current File",
+    "type": "python",
+    "request": "launch",
+    "program": "${workspaceFolder}/server/venv/Script/python",
+    "console": "integratedTerminal",
+    "autoReload": {
+      "enable": true
+    }
+  }
