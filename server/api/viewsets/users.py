@@ -3,8 +3,12 @@ from django.contrib.auth.models import User as UsersModel
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.authtoken.models import Token
+from rest_framework.authtoken.views import ObtainAuthToken
+
 
 from api.serializers.users import UserDetailsSerializer, CreateUserSerializer
+from api.serializers import UserSigninSerializer
 
 
 class UsersAPIView(APIView):
@@ -37,5 +41,16 @@ class UserAPIView(APIView):
 
 
 class SignInAPIView(APIView):
-    def post(self, request, username:str):
+    def post(self, request, username: str):
+        serializer = UserSigninSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        username = serializer.validated_data.get("username")
+        password = serializer.validated_data.get("password")
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            return Response()
+        e
+
+class SignUPAPIView(APIView):
+    def post(self, request, username: str):
         pass
