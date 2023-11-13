@@ -1,10 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { axiosInstance } from '../../Axios';
+import {userLoginInterface} from '../../types/index';
 
-export const getTokenAPI = createAsyncThunk("getTokenAPI", async (data, thunkAPI) => {
+export const getTokenAPI = createAsyncThunk("getTokenAPI", async (data: userLoginInterface) => {
     const response = await axiosInstance({
-        url: "get_token/",
+        url: "signin/",
         method: "POST",
         headers: {
             'Content-Type': 'application/json'

@@ -4,7 +4,7 @@ import {userService} from "./slices/users";
 
 export const store = configureStore({
   reducer: {
-    auth: userService.reducers,
+    user: userService,
   },
 })
 

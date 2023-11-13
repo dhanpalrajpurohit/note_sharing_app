@@ -1,19 +1,11 @@
 import { configureStore, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { getUserAPI, getProfileAPI, logoutAPI } from './../services/authentication';
+import { getTokenAPI } from './../services/users';
+import {userInterface, userStateInterface} from './../../types/index'
 
 
-export interface UserState {
-    msg: string | null
-    data: string | null
-    token: string | null
-    isAuthenticated: boolean,
-    user: string | null
-};
-
-const initialState: UserState = {
+const initialState: userStateInterface = {
     user: null,
     msg: null,
-    data: null,
     token: null,
     isAuthenticated: false
 }
@@ -21,13 +13,22 @@ const initialState: UserState = {
 const getUserSlice = createSlice({
     name: "user",
     initialState,
-    reducers: {
-        setTokenAndUser: (state, action: PayloadAction<{ token: string; user: any }>) => {
-            state.token = action.payload.token;
-            state.user = action.payload.user;
-            state.isAuthenticated = true;
-        }
-    }
-})
+    extraReducers: (builder) => {
+        builder.addCase(getTokenAPI.pending, (state) => {
+          state.token = null
+          state.msg = null
+          state.user = null
+        })
+        builder.addCase(getTokenAPI.fulfilled, (state, action) => {
+          state.user = action.payload.user
+          state.token = action.payload.token
+          state.isAuthenticated = true
+        })
+        builder.addCase(getTokenAPI.rejected, (state, action) => {
+          state.msg = action.payload
+          state.user = null
+        })
+      }
+    })
 
-export const userService = getUserSlice.actions;
+export const userService = getUserSlice.reducer;

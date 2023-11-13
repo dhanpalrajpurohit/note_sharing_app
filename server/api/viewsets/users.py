@@ -46,7 +46,8 @@ class SignInAPIView(APIView):
         if serializer is not None:
             user = UsersModel.objects.get(username=serializer.validated_data['username'])
             token, _ = Token.objects.get_or_create(user=user)
-            response = UserDetailsSerializer(user).data
+            response = {}
+            response['user'] = UserDetailsSerializer(user).data
             response['token'] = token.key
             return JsonResponse(response, status=status.HTTP_200_OK)
         else:
