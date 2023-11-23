@@ -11,6 +11,7 @@ import { Link, useNavigate } from 'react-router-dom'
 
 import {getTokenAPI} from "../store/services/users";
 import {userLoginInterface, UserState} from '../types/index';
+import ErrorMessage from "./ErrorMessage";
 
 export default function SignIn() {
 
@@ -21,6 +22,7 @@ export default function SignIn() {
 
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const [errormsg, setErrorMsg] = React.useState("");
 
   const formSubmitHandler = async(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -33,7 +35,11 @@ export default function SignIn() {
       localStorage.setItem('user', user);
       localStorage.setItem('token', token);
       navigate('/');
-    }      
+    }
+    else{
+      let msg = "provided username and password are incorrect"
+      setErrorMsg(msg)
+    }    
   }
   return (
     <div className="flex flex-row h-screen">
@@ -42,7 +48,8 @@ export default function SignIn() {
         src="https://images.unsplash.com/photo-1682407186023-12c70a4a35e0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2832&q=80"
         alt="nature image"
       />
-      <Card color="transparent" className="mx-auto justify-center place-items-center" shadow={false}>
+      <Card color="transparent" className="mx-auto w-100 p-0 justify-center place-items-center" shadow={false}>
+      {errormsg && <ErrorMessage message={errormsg}/>}
         <div className="flex items-center gap-4">
             <Avatar src="https://tecdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/lotus.webp" alt="avatar" variant="square" size="xxl"/>
         </div>

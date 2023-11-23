@@ -27,6 +27,7 @@ const getUserSlice = createSlice({
         builder.addCase(getTokenAPI.rejected, (state, action) => {
           state.msg = action.payload
           state.user = null
+          state.isAuthenticated = false
         })
       }
     })
