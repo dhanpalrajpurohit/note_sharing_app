@@ -9,9 +9,9 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from 'react-router-dom'
 
-import {getTokenAPI} from "../store/services/users";
+import {getTokenAPI} from "../services/users";
 import {userLoginInterface, UserState} from '../types/index';
-import ErrorMessage from "./ErrorMessage";
+import ErrorMessage from "../components/ErrorMessage";
 
 export default function SignIn() {
 

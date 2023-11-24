@@ -1,12 +1,12 @@
 import React from 'react';
-import CustomCard from './Card';
-import configData from './../configData.json';
+import CustomCard from '../components/Card';
+import configData from '../configData.json';
 import { Button, Input, Typography } from '@material-tailwind/react';
 
-import Paginator from './Pagination';
-import Sidebar from './Sidebar';
-import Navbar from './Navbar'
-import DialogSizes from "./DialogBox";
+import Paginator from '../components/Pagination';
+import Sidebar from '../components/Sidebar';
+import Navbar from '../components/Navbar'
+import DialogSizes from "../components/DialogBox";
 
 
 const NOTES_DATA = configData['notes'];

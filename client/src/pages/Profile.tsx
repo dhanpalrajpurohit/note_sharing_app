@@ -9,8 +9,8 @@ import {
     Input
 } from "@material-tailwind/react";
 
-import CustomNavbar from "./Navbar";
-import ResetPasswordModal from './ResetPasswordModal';
+import CustomNavbar from "../components/Navbar";
+import ResetPasswordModal from '../components/ResetPasswordModal';
 
 
 export default function Profile() {

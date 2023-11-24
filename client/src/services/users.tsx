@@ -1,6 +1,6 @@
 import { configureStore, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { getTokenAPI } from './../services/users';
-import {userInterface, userStateInterface} from './../../types/index'
+import { getTokenAPI } from '@/features/authenticationSlice';
+import {userStateInterface} from '@/types/index'
 
 
 const initialState: userStateInterface = {
@@ -13,6 +13,7 @@ const initialState: userStateInterface = {
 const getUserSlice = createSlice({
     name: "user",
     initialState,
+    reducers:{},
     extraReducers: (builder) => {
         builder.addCase(getTokenAPI.pending, (state) => {
           state.token = null
@@ -23,6 +24,8 @@ const getUserSlice = createSlice({
           state.user = action.payload.user
           state.token = action.payload.token
           state.isAuthenticated = true
+          localStorage.setItem("authToken", state.token);
+          localStorage.setItem("authUser", JSON.stringify(state.user));
         })
         builder.addCase(getTokenAPI.rejected, (state, action) => {
           state.msg = action.payload
