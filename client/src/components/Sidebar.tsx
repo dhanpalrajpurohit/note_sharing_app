@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React from "react";
 
 import {
   Card,
@@ -19,7 +19,7 @@ import DialogSizes from "./DialogBox";
 
 export default function Sidebar() {
 
-  const [modalOpen, setModalOpen] = useState(false);
+  const [modalOpen, setModalOpen] = React.useState(false);
 
   const openModal = () => {
     setModalOpen(!modalOpen);

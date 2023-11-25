@@ -32,9 +32,8 @@ export default function SignIn() {
     }
     dispatch(getTokenAPI(payload));
     if(isAuthenticated){
-      localStorage.setItem('user', user);
       localStorage.setItem('token', token);
-      navigate('/');
+      navigate('/dashboard');
     }
     else{
       let msg = "provided username and password are incorrect"

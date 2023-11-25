@@ -1,21 +1,38 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
+import { configureStore, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { getTokenAPI } from '../services/users';
+import {userStateInterface} from 'types/index'
 
-import { axiosInstance } from '../Axios';
-import {userLoginInterface} from '../types/index';
 
-export const getTokenAPI = createAsyncThunk("getTokenAPI", async (data: userLoginInterface, thunkAPI) => {
-  try{
-    const response = await axiosInstance({
-      url: "signin/",
-      method: "POST",
-      headers: {
-          'Content-Type': 'application/json'
-      },
-      data: data,
-  });
-  return response.data;
-  }
-  catch(error){
-      return thunkAPI.rejectWithValue(error.response.data);
-  }    
-});
+const initialState: userStateInterface = {
+    user: null,
+    msg: null,
+    token: null,
+    isAuthenticated: false
+}
+
+const getUserSlice = createSlice({
+    name: "user",
+    initialState,
+    reducers:{},
+    extraReducers: (builder) => {
+        builder.addCase(getTokenAPI.pending, (state) => {
+          state.token = null
+          state.msg = null
+          state.user = null
+        })
+        builder.addCase(getTokenAPI.fulfilled, (state, action) => {
+          state.user = action.payload.user
+          state.token = action.payload.token
+          state.isAuthenticated = true
+          localStorage.setItem("authToken", state.token);
+          localStorage.setItem("authUser", JSON.stringify(state.user));
+        })
+        builder.addCase(getTokenAPI.rejected, (state, action) => {
+          state.msg = action.payload
+          state.user = null
+          state.isAuthenticated = false
+        })
+      }
+    })
+
+export const authSlice = getUserSlice.reducer;
